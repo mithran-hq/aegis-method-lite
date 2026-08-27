@@ -1,0 +1,20 @@
+{
+  "name": "mithran",
+  "interface": {
+    "displayName": "Mithran"
+  },
+  "plugins": [
+    {
+      "name": "aegis-method",
+      "source": {
+        "source": "local",
+        "path": "./plugins/aegis-method"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "aegis-method",
+  "version": "0.2.0",
+  "displayName": "Aegis Method",
+  "description": "Work under the guided Aegis Method: five mandatory moves (evidence, strategy, issues-as-memory, falsification, closure) with a .aegis/ plan train authored before any implementation.",
+  "author": {
+    "name": "Mithran",
+    "url": "https://github.com/mithran-hq"
+  },
+  "repository": "https://github.com/mithran-hq/aegis-method-lite",
+  "license": "MIT",
+  "keywords": [
+    "methodology",
+    "planning",
+    "falsification",
+    "evidence",
+    "agent-discipline"
+  ],
+  "metadata": {
+    "payload_digest": "5dc6a290ae50d9a81d52807f841f65b6baf536eae976db3421578ae195d578b2",
+    "payload_source": "bench3 K10 tested P1 payload with one rename (.bruno -> .aegis); see PAYLOAD.md provenance",
+    "payload_digest_note": "digest is of the tested source text (pre-rename)"
+  }
+}

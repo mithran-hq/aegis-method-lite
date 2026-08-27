@@ -1,0 +1,23 @@
+{
+  "name": "mithran",
+  "owner": {
+    "name": "Mithran",
+    "url": "https://github.com/mithran-hq"
+  },
+  "plugins": [
+    {
+      "name": "aegis-method",
+      "source": "./plugins/aegis-method",
+      "description": "Work under the guided Aegis Method: five mandatory moves with a .aegis/ plan train authored before any implementation.",
+      "version": "0.2.0",
+      "author": {
+        "name": "Mithran"
+      },
+      "license": "MIT"
+    }
+  ],
+  "metadata": {
+    "description": "Mithran plugin marketplace — the Aegis Method for LLM coding agents.",
+    "version": "0.2.0"
+  }
+}
