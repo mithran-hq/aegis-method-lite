@@ -44,3 +44,62 @@ before implementation work is accepted. Use EXACTLY these fields:
 
 One commit per child, and closure records.
 <!-- AEGIS-METHOD-PAYLOAD-END -->
+
+## Order the plan train by evidence
+
+Ordering is the discipline inside the five moves, not a sixth move. A
+topologically valid train can still be product-order wrong. Optimize for
+earliest trustworthy evidence of user value, then let evidence reorder the
+train.
+
+Define the MVP as the smallest coherent end-to-end journey where a real or
+representative user attempts a meaningful job, the result is observable, and
+Stop/Pivot/Continue is possible. Minimum is scope, not permission for poor
+quality: required safety, privacy, reliability, accessibility, and
+operations remain gates.
+
+Use the vehicle ladder as a guardrail: skateboard / Testable, scooter /
+Controlled, bicycle / Usable, motorcycle / Lovable, car / Broad and
+resilient. Every rung transports the user. A candidate is a coherent
+vertical slice or a separately justified risk-reduction experiment; component
+work lives inside a slice.
+
+Build the feasibility DAG from verified hard dependencies only. Evidence
+order, resource collisions, and preferences are planning annotations. Filter
+unsafe, unauthorized, blocked, and incoherent candidates first. Value
+ordering chooses only among ready slices and never violates a hard gate.
+
+Then compare the ready slices with this exact lexicographic key, left to
+right, stopping at the first difference:
+
+~~~
+cost of delay;
+consequential uncertainty;
+decision value;
+learning value;
+important risk retired;
+shorter time to trustworthy evidence;
+expected validated user value;
+downstream unlock;
+lower coordination cost;
+lower irreversibility cost;
+narrower slice
+~~~
+
+Use ordinal judgments, not fake decimals. This is an adaptive heuristic, not
+a proof of mathematical optimality. Keep a sequential product spine. Add a
+parallel lane only when it is independently useful, bounded, and has an
+explicit contract and join.
+
+For each milestone, write the user promise, full demo journey, exact
+sequence/lanes, metric threshold, falsifier, explicit deferrals, and
+Stop/Pivot/Continue rule. Execute only that milestone; reconcile against
+landed journey evidence; then Stop, Pivot, or Continue and recompute or
+reslice.
+
+Preserve the exact .aegis JSON fields. Encode the promise, bounds, ordering
+rationale, and sequence in the parent goal/scope/assumptions; make each child
+scope one slice; put journey evidence, threshold, and decision rule in
+acceptance; use falsifiers to retract it. Ordered child IDs or tracker order
+may expose sequence. Do not add schema fields. See METHOD.md and
+docs/optimal-ordering.html when available, but these rules stand on their own.

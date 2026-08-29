@@ -137,6 +137,99 @@ Record state transitions as you make them (append, never rewrite): the
 trail is what lets a later agent — or you, after a context loss — resume
 without resurrecting already-falsified ideas as fresh uncertainty.
 
+### 4.1 Ordering the train: earliest trustworthy value
+
+Ordering is the discipline **inside** the five moves, not a sixth move. A
+train can be topologically valid and still be product-order wrong: every
+dependency is satisfied while the user journey, the learning, and the
+decision evidence arrive too late. Order for the earliest trustworthy
+evidence of user value, then let that evidence change the train.
+
+An **MVP** is the smallest coherent end-to-end journey where a real or
+representative user attempts a meaningful job, the system produces an
+observable result, and the team can decide **Stop, Pivot, or Continue**.
+Minimum is scope, not quality. Required safety, privacy, reliability,
+accessibility, and operational controls remain gates when they are part of
+the promise.
+
+Use the vehicle ladder as a guardrail against component-first thinking:
+
+```
+skateboard → scooter → bicycle → motorcycle → car
+ Testable      Controlled   Usable     Lovable     Broad / resilient
+```
+
+Every rung transports the user. The first rung is a narrow complete journey;
+later rungs make that same journey more controlled, usable, lovable, and
+then broad and resilient. Build the wheel only when the current vehicle can
+move. Component-only milestones are not user value. A fuller visual and
+worked examples live in [`docs/optimal-ordering.html`](docs/optimal-ordering.html).
+
+The candidate unit is a **coherent vertical slice** or a separately
+justified risk-reduction experiment. Component work lives inside a slice;
+it does not outrank a slice merely because it is a large or difficult
+component. Infrastructure is work in the train when it is a verified hard
+dependency or material risk reducer for the promised journey. Proof
+machinery makes a claim trustworthy; it does not become product value by
+being difficult.
+
+Keep two graphs distinct. The feasibility DAG contains only **verified hard
+dependencies**: edges that make a later slice unsafe or impossible without
+an earlier one. Evidence-order relationships, resource collisions, and
+preferences are planning annotations, not feasibility edges. Challenge
+accidental relationships and split cycles with an interface, stub, or
+experiment. Delivery ordering chooses only among ready nodes and never
+overrides a hard safety, authority, or dependency gate.
+
+After gates and coherent-slice filtering, compare ready slices with this
+single qualitative key, left to right:
+
+```
+cost of delay;
+consequential uncertainty;
+decision value;
+learning value;
+important risk retired;
+shorter time to trustworthy evidence;
+expected validated user value;
+downstream unlock;
+lower coordination cost;
+lower irreversibility cost;
+narrower slice
+```
+
+Use ordinal judgments and stop at the first difference. Do not invent
+decimals or pretend the result is a proof of mathematical optimality. This
+is an adaptive heuristic: its inputs and order are recomputed when reality
+changes.
+
+Keep a sequential **product spine** for the user promise. Add parallel lanes
+only when the work is independently useful, bounded, and has a clear
+contract and explicit join or gate. Otherwise parallelism is serial work
+hidden in columns.
+
+The practical loop is:
+
+1. Observe current reality.
+2. Define the user, job, outcome, and non-goals.
+3. Rewrite the backlog as coherent slices or experiments.
+4. Classify relationships and build the DAG from verified hard edges.
+5. Filter unsafe, unauthorized, blocked, unready, or incoherent candidates.
+6. Rank the ready slices with the key above.
+7. Define a milestone contract: user promise, full journey, exact sequence
+   and lanes, threshold, falsifier, explicit deferrals, and Stop/Pivot/Continue.
+8. Execute only the current milestone.
+9. Reconcile the result against landed user-journey evidence.
+10. Stop, Pivot, or Continue; then recompute, reslice, or end.
+
+Encode ordering without changing the exact `.aegis` JSON schema. Put the
+promise, bounds, ordering rationale, and sequence in the parent `goal`,
+`scope`, and `assumptions`. Make each child `scope` one slice; state the
+complete journey, evidence threshold, and decision rule in `acceptance`; use
+`falsifiers` to retract it. Ordered child IDs or tracker order may expose
+the sequence. Do not invent fields. The order is memory only when it is
+recorded where the next agent can inspect and revise it.
+
 ## 5. The Five Moves
 
 Five mandatory passes, in order. Each has a refusal mode — the condition
