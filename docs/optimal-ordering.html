@@ -23,6 +23,7 @@
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    html, body { overflow-x: hidden; }
     body {
       margin: 0;
       color: var(--ink);
@@ -33,7 +34,7 @@
     a { color: var(--indigo); text-underline-offset: 3px; }
     a:hover { color: var(--warm); }
     a:focus-visible, button:focus-visible, summary:focus-visible {
-      outline: 3px solid #f2a36f;
+      outline: 3px solid #343e93;
       outline-offset: 3px;
       border-radius: 4px;
     }
@@ -84,8 +85,8 @@
     pre { overflow-x: auto; margin: 1.3rem 0; padding: 1.2rem; border: 1px solid #cfd7e6; border-radius: var(--radius); color: #e8edf8; background: #171d30; font-size: .79rem; line-height: 1.65; }
     .formula { margin: 1.3rem 0; padding: 1.3rem; border: 1px solid #b9c7e0; border-radius: var(--radius); color: #202c60; background: var(--blue-pale); text-align: center; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1rem, 2vw, 1.25rem); }
     .formula small { display: block; margin-top: .45rem; color: var(--muted); font-family: ui-sans-serif, sans-serif; font-size: .73rem; }
-    .diagram { margin: 1.5rem 0; padding: 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
-    .diagram svg { display: block; width: 100%; height: auto; }
+    .diagram { overflow-x: auto; margin: 1.5rem 0; padding: 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); overscroll-behavior-x: contain; }
+    .diagram svg { display: block; width: 100%; min-width: 720px; height: auto; }
     .diagram figcaption { margin: .75rem .2rem 0; color: var(--muted); font-size: .78rem; }
     .ladder-label { font-size: 12px; font-weight: 750; fill: #151a2a; }
     .ladder-sub { font-size: 10px; fill: #596176; }
@@ -102,6 +103,9 @@
     .checklist li { position: relative; padding-left: 1.55rem; }
     .checklist li::before { content: "□"; position: absolute; left: 0; color: var(--warm); font-size: 1.1rem; font-weight: 800; }
     .footer-note { padding-top: 2rem; color: var(--muted); font-size: .84rem; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
     @media (max-width: 940px) {
       .page { padding-inline: 1.25rem; }
       .layout { display: block; }
@@ -258,49 +262,49 @@
 
         <section id="graphs">
           <h2>Two graphs, two questions</h2>
-          <p class="lead">Do not confuse the dependency graph with the delivery order. One describes possibility. The other is a decision about value now.</p>
+          <p class="lead">Do not confuse the dependency graph with the delivery order. One describes feasibility. The other is a decision about value now, made only among nodes that are ready.</p>
           <div class="grid-2">
             <article class="card">
               <h3>Dependency DAG</h3>
-              <p>Directed edges say what must precede what. It should be acyclic after splitting cycles into an interface, a stub, or an experiment.</p>
-              <p class="small"><strong>Question:</strong> what is possible?</p>
+              <p>Only verified hard-dependency edges belong here. It should be acyclic after splitting cycles into an interface, a stub, or an experiment.</p>
+              <p class="small"><strong>Question:</strong> what is feasible?</p>
             </article>
             <article class="card">
               <h3>Delivery sequence</h3>
-              <p>A time-ordered choice among ready work. It considers evidence value, risk, delay, coordination, and the current user promise.</p>
+              <p>A time-ordered choice among ready work. It preserves every verified hard edge, then compares value, evidence, delay, coordination, and the current user promise.</p>
               <p class="small"><strong>Question:</strong> what is valuable now?</p>
             </article>
           </div>
-          <h3>Type every edge</h3>
+          <h3>Classify every relationship; build the DAG from hard edges</h3>
           <div class="table-wrap">
             <table>
-              <thead><tr><th scope="col">Edge type</th><th scope="col">Meaning</th><th scope="col">Rule</th></tr></thead>
+              <thead><tr><th scope="col">Relationship type</th><th scope="col">Meaning</th><th scope="col">Where it belongs</th></tr></thead>
               <tbody>
-                <tr><td><strong>Hard</strong></td><td>The later item cannot safely or meaningfully execute without the earlier one.</td><td>Only a verified hard edge blocks. Name the property that makes it hard.</td></tr>
-                <tr><td><strong>Evidence</strong></td><td>The earlier item supplies an observation needed to choose or judge the later one.</td><td>It changes confidence, not necessarily feasibility.</td></tr>
-                <tr><td><strong>Resource</strong></td><td>People, environments, permissions, or scarce equipment collide.</td><td>Schedule the collision; do not invent a conceptual dependency.</td></tr>
-                <tr><td><strong>Preference</strong></td><td>A convention, aesthetic, or default habit says “do this first.”</td><td>Challenge it. Preference never blocks by itself.</td></tr>
+                <tr><td><strong>Hard</strong></td><td>The later slice cannot safely or meaningfully execute without the earlier one.</td><td><strong>Feasibility DAG.</strong> Only a verified hard edge blocks. Name the property that makes it hard.</td></tr>
+                <tr><td><strong>Evidence</strong></td><td>The earlier slice supplies an observation needed to choose or judge the later one.</td><td><strong>Planning annotation.</strong> It can shape delivery order, but does not make the later node infeasible.</td></tr>
+                <tr><td><strong>Resource</strong></td><td>People, environments, permissions, or scarce equipment collide.</td><td><strong>Planning annotation.</strong> Schedule the collision; do not turn a scarce person into a conceptual edge.</td></tr>
+                <tr><td><strong>Preference</strong></td><td>A convention, aesthetic, or default habit says “do this first.”</td><td><strong>Planning annotation.</strong> Challenge it. Preference never blocks by itself.</td></tr>
               </tbody>
             </table>
           </div>
-          <p>Challenge and rewrite accidental edges. If two items appear cyclic, split the interface from the implementation, create a thin stub, or run an experiment that resolves the mutual assumption. A cycle is usually a signal that the work is too coarsely sliced.</p>
+          <p>Construct the DAG from verified hard dependencies, then annotate it with evidence-order relationships, resource collisions, and preferences. Challenge and rewrite accidental relationships. If two items appear cyclic, split the interface from the implementation, create a thin stub, or run an experiment that resolves the mutual assumption. A cycle is usually a signal that the work is too coarsely sliced.</p>
           <figure class="diagram">
-            <svg viewBox="0 0 760 180" role="img" aria-labelledby="dag-title dag-desc">
+            <svg viewBox="0 0 760 220" role="img" aria-labelledby="dag-title dag-desc">
               <title id="dag-title">Dependency graph and delivery sequence</title>
-              <desc id="dag-desc">A dependency graph shows possible order from a foundation to a slice and then expansion. A separate arrow below shows the chosen value-first sequence, which may start with a thin slice rather than the largest foundation.</desc>
+              <desc id="dag-desc">A verified prerequisite points to two ready branches, a narrow evidence slice and broader work. The delivery sequence preserves the prerequisite and chooses the narrow branch before the broader branch.</desc>
               <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#343e93"/></marker></defs>
-              <text x="18" y="25" class="ladder-label">DEPENDENCY DAG · what is possible</text>
-              <rect x="22" y="42" width="140" height="40" rx="7" fill="#eff0fb" stroke="#343e93"/><text x="92" y="67" text-anchor="middle" class="ladder-label">safe seam</text>
-              <rect x="218" y="42" width="140" height="40" rx="7" fill="#eef5fc" stroke="#1e67a9"/><text x="288" y="67" text-anchor="middle" class="ladder-label">narrow slice</text>
-              <rect x="414" y="42" width="140" height="40" rx="7" fill="#fff1eb" stroke="#c4572d"/><text x="484" y="67" text-anchor="middle" class="ladder-label">broader path</text>
-              <path d="M162 62 H214" stroke="#343e93" stroke-width="2" marker-end="url(#arrow)"/><path d="M358 62 H410" stroke="#343e93" stroke-width="2" marker-end="url(#arrow)"/>
-              <text x="18" y="115" class="ladder-label">DELIVERY SEQUENCE · what is valuable now</text>
-              <rect x="22" y="132" width="140" height="32" rx="7" fill="#fff1eb" stroke="#c4572d"/><text x="92" y="153" text-anchor="middle" class="ladder-label">narrow slice</text>
-              <rect x="218" y="132" width="140" height="32" rx="7" fill="#eff0fb" stroke="#343e93"/><text x="288" y="153" text-anchor="middle" class="ladder-label">safe seam</text>
-              <rect x="414" y="132" width="140" height="32" rx="7" fill="#eef5fc" stroke="#1e67a9"/><text x="484" y="153" text-anchor="middle" class="ladder-label">broader path</text>
-              <path d="M162 148 H214" stroke="#c4572d" stroke-width="2" marker-end="url(#arrow)"/><path d="M358 148 H410" stroke="#c4572d" stroke-width="2" marker-end="url(#arrow)"/>
+              <text x="18" y="23" class="ladder-label">FEASIBILITY DAG · verified hard edges only</text>
+              <rect x="22" y="42" width="160" height="40" rx="7" fill="#eff0fb" stroke="#343e93"/><text x="102" y="67" text-anchor="middle" class="ladder-label">verified prerequisite</text>
+              <rect x="286" y="30" width="172" height="40" rx="7" fill="#eef5fc" stroke="#1e67a9"/><text x="372" y="55" text-anchor="middle" class="ladder-label">ready: narrow slice</text>
+              <rect x="286" y="88" width="172" height="40" rx="7" fill="#fff1eb" stroke="#c4572d"/><text x="372" y="113" text-anchor="middle" class="ladder-label">ready: broader work</text>
+              <path d="M182 62 H235 V50 H282" fill="none" stroke="#343e93" stroke-width="2" marker-end="url(#arrow)"/><path d="M182 62 H235 V108 H282" fill="none" stroke="#343e93" stroke-width="2" marker-end="url(#arrow)"/>
+              <text x="18" y="158" class="ladder-label">DELIVERY SEQUENCE · choose among ready nodes</text>
+              <rect x="22" y="175" width="160" height="32" rx="7" fill="#eff0fb" stroke="#343e93"/><text x="102" y="196" text-anchor="middle" class="ladder-label">prerequisite</text>
+              <rect x="286" y="175" width="172" height="32" rx="7" fill="#eef5fc" stroke="#1e67a9"/><text x="372" y="196" text-anchor="middle" class="ladder-label">narrow slice → evidence</text>
+              <rect x="562" y="175" width="172" height="32" rx="7" fill="#fff1eb" stroke="#c4572d"/><text x="648" y="196" text-anchor="middle" class="ladder-label">broader work</text>
+              <path d="M182 191 H282" stroke="#343e93" stroke-width="2" marker-end="url(#arrow)"/><path d="M458 191 H558" stroke="#c4572d" stroke-width="2" marker-end="url(#arrow)"/>
             </svg>
-            <figcaption>The graphs can agree on the eventual shape and disagree on the next move. That disagreement is the point of ordering.</figcaption>
+            <figcaption>The graphs can agree on the eventual shape and disagree on the next move. Value ordering chooses among ready nodes; it cannot override a verified hard edge. <span class="small">Scroll this diagram horizontally on narrow screens.</span></figcaption>
           </figure>
         </section>
 
@@ -329,9 +333,9 @@
 
         <section id="objective">
           <h2>A decision objective, without fake precision</h2>
-          <p>For each ready candidate, ask how much trustworthy value and learning it can buy before more time, coordination, and irreversible commitment. Use ordinal scales such as low, medium, and high. The formula is a thinking aid, not a measurement system.</p>
-          <div class="formula">Choose the next slice that maximizes <strong>(validated user value + learning + important risk retired + downstream unlock)</strong> ÷ <strong>(time to evidence + coordination cost + irreversibility cost)</strong><small>subject to hard safety, authority, and dependency gates · use explicit judgments, not invented decimals</small></div>
-          <p>“Value” must be tied to the current outcome. “Risk retired” must name a consequential risk. “Unlock” must identify a real next decision. Penalize slices whose evidence arrives late, whose coordination surface is broad, or whose commitment is hard to undo. A small experiment can win because it changes the order of everything after it.</p>
+          <p>The formal objective is to maximize expected validated user value, learning, important risk retired, and downstream unlock per time to trustworthy evidence plus coordination and irreversibility cost, subject to hard safety, authority, and dependency gates. Do not turn that sentence into fake decimal arithmetic. Operationalize it with one reproducible lexicographic key.</p>
+          <div class="formula"><strong>Choose argmax<sub>lex</sub> K(slice)</strong><br>K = (cost of delay, consequential uncertainty / decision value + learning + important risk retired, − time to trustworthy evidence, expected validated user value, downstream unlock, − coordination / irreversibility cost, narrower slice)<small>First reject any candidate that fails a hard safety, authority, or verified-dependency gate. Every remaining candidate must be a coherent evidence-producing vertical slice. Compare each position left to right using ordinal judgments: high beats medium, medium beats low; shorter time and lower cost win. Stop at the first difference.</small></div>
+          <p>“Cost of delay” names what loses value by waiting. “Decision value” names a consequential unknown the slice can settle. “Time” means time until trustworthy evidence, not time until code exists. “Unlock” identifies a real next decision. Record the words behind each judgment so another person can reproduce the choice. A small experiment can win because it changes the order of everything after it.</p>
         </section>
 
         <section id="algorithm">
@@ -342,10 +346,10 @@
             <li><strong>Define the user, job, outcome, and non-goals.</strong> State who attempts what, what observable result matters, and what this order deliberately does not solve.</li>
             <li><strong>Rewrite the backlog as outcomes or experiments.</strong> Replace “build service X” with a claim about user behavior, a risk, or a decision the work will settle.</li>
             <li><strong>Find the core loop.</strong> Trace the smallest path from trigger to user action to system result to next decision. Everything else is an extension until proven otherwise.</li>
-            <li><strong>Type dependency edges.</strong> Label hard, evidence, resource, and preference edges. Verify blockers. Challenge accidental edges; split cycles with seams, stubs, or experiments.</li>
-            <li><strong>Identify the Earliest Testable slice.</strong> Pick the smallest coherent journey that can expose the riskiest consequential assumption and produce observable evidence.</li>
-            <li><strong>Filter the candidate set.</strong> Remove work that is not ready, unsafe, unauthorized, blocked by a verified hard edge, or incoherent with the current user promise.</li>
-            <li><strong>Rank the ready set.</strong> Use the objective above lexicographically: hard gates first; then earliest evidence, decision value, risk retired, unlock, cost of delay, and reversibility. Break ties toward the narrower slice.</li>
+            <li><strong>Classify relationships.</strong> Label hard, evidence, resource, and preference relationships. Construct the feasibility DAG from verified hard edges only; annotate the other three. Challenge accidental relationships and split cycles with seams, stubs, or experiments.</li>
+            <li><strong>Identify the Earliest Testable slice.</strong> Define the smallest coherent vertical journey that can expose the riskiest consequential assumption and produce observable evidence. Use this slice as the unit of every candidate, not a component-shaped task.</li>
+            <li><strong>Filter the candidate set.</strong> Remove any item that is not a coherent evidence-producing slice, not ready, unsafe, unauthorized, or blocked by a verified hard edge. A component can appear only as work inside a slice or as a separately justified risk-reduction experiment.</li>
+            <li><strong>Rank the ready set.</strong> Among candidates that pass the gates and preserve the hard-edge DAG, compare the same key in order: cost of delay; consequential uncertainty / decision value plus learning and important risk retired; time to trustworthy evidence; expected validated user value; downstream unlock; coordination / irreversibility cost; narrower slice as the tie-break. Use ordinal judgments and stop at the first difference.</li>
             <li><strong>Build the spine and lanes.</strong> Put the chosen user journey in sequence. Add only independently useful parallel work with bounded WIP, contracts, and an explicit join gate.</li>
             <li><strong>Define the milestone contract.</strong> Write the user promise, complete demo journey, exact issue order, evidence threshold, falsifier, deferrals, and Stop/Pivot/Continue rule before execution.</li>
             <li><strong>Execute the current milestone only.</strong> Keep scope bounded. Do not silently spend the next decision’s budget while the current evidence is still unresolved.</li>
@@ -358,16 +362,23 @@
   reality = observe_system_and_user()
   goal, non_goals = define_job_and_outcome(reality)
   candidates = rewrite_as_outcomes_or_experiments(backlog)
-  graph = type_and_verify_edges(candidates)
-  slice = smallest_coherent_testable_path(goal, graph)
-  ready = filter(candidates, ready_and_safe_and_coherent)
-  next = argmax(ready, by=ordinal_value_of_evidence_per_cost)
+  relationships = classify(candidates)  # hard, evidence, resource, preference
+  dag = build_from_verified_hard_edges(relationships.hard)
+  slice = smallest_coherent_testable_vertical_journey(goal, dag)
+  candidates = express_as_slices_or_experiments(candidates, slice)
+  ready = filter(candidates, coherent_and_ready_and_safe_and_authorized,
+                 hard_edges_satisfied(dag))
+  key = (cost_of_delay, consequential_uncertainty_decision_value + learning
+         + important_risk_retired, -time_to_trustworthy_evidence,
+         expected_validated_user_value, downstream_unlock,
+         -coordination_irreversibility_cost, narrower_slice)
+  next = lexicographic_max(ready, by=key)  # ordinal; no invented decimals
   spine, lanes = arrange(next, parallel_only_if_join_is_explicit)
   contract = write_gate(spine, lanes, falsifier, threshold)
   execute(contract)
   result = reconcile_against_landed_user_evidence(contract)
   decision = stop_pivot_continue(result)
-  backlog = recompute_and_reslice(backlog, graph, decision)
+  backlog = recompute_and_reslice(backlog, dag, relationships, decision)
   if decision == STOP: break</code></pre>
         </section>
 
@@ -404,20 +415,41 @@
         </section>
 
         <section id="example">
-          <h2>Worked example: incident response</h2>
+          <h2>Worked algorithm pass: incident response</h2>
           <p class="lead">Imagine a team helping an on-call operator respond to a service incident. The domain is generic; the ordering lesson is the point.</p>
+          <div class="grid-2">
+            <article class="card">
+              <h3>1. Reality and job</h3>
+              <p>Observed reality: operators receive noisy signals in several channels, cannot reliably tell whether an alert was seen, and currently record acknowledgment by hand.</p>
+              <p><strong>User job:</strong> notice one meaningful signal, acknowledge it, and know what decision comes next. Non-goal: broad routing or a complete incident console.</p>
+            </article>
+            <article class="card">
+              <h3>2. Candidate slices</h3>
+              <p><strong>A:</strong> one real signal → one alert → one acknowledgment with an audit record.</p>
+              <p><strong>B:</strong> multi-channel routing, deduplication, and escalation for all services.</p>
+              <p><strong>C:</strong> a dashboard showing historical incidents without a response path.</p>
+            </article>
+          </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th scope="col">Component-first order</th><th scope="col">Value-first ladder</th></tr></thead>
+              <thead><tr><th scope="col">Relationship pass</th><th scope="col">Result</th></tr></thead>
               <tbody>
-                <tr><td>General event schema → alert platform → routing rules → dashboard → acknowledgment UI → escalation.</td><td><strong>Testable:</strong> one real signal → one alert → one operator acknowledgment, with an observable audit record.</td></tr>
-                <tr><td>It may be technically coherent, but the team learns late whether an operator trusts the alert, sees it, or knows what to do.</td><td><strong>Controlled:</strong> add reliable delivery, deduplication, and a clear failure state for the chosen channel.</td></tr>
-                <tr><td>More components create more surfaces to maintain before the core response loop is judged.</td><td><strong>Usable:</strong> add the normal incident context, repeatable handoff, and the minimum recovery path.</td></tr>
-                <tr><td>Broad coverage is mistaken for readiness.</td><td><strong>Lovable / broad:</strong> improve signal quality, preference, escalation, and resilience only after evidence justifies expansion.</td></tr>
+                <tr><td><strong>Verified hard dependencies</strong></td><td>Both A and B require the existing authenticated event ingress. B also requires a delivery adapter. C has no hard edge into A.</td></tr>
+                <tr><td><strong>Evidence annotation</strong></td><td>A’s acknowledgment evidence should precede the choice of routing breadth. This shapes order; it does not block B.</td></tr>
+                <tr><td><strong>Resource annotation</strong></td><td>The same operator is available for one observation session. Schedule it; do not draw a hard edge.</td></tr>
+                <tr><td><strong>Preference annotation</strong></td><td>“Build the generalized event schema first” is a preference until a verified property makes it necessary.</td></tr>
               </tbody>
             </table>
           </div>
-          <p>The first order optimizes for component completion. The second optimizes for the earliest trustworthy answer to: “When a real signal matters, can an operator notice it, acknowledge it, and make the next decision?” If that answer is no, the backlog should change before the dashboard gets prettier.</p>
+          <p><strong>Ready-set comparison:</strong> after the ingress gate, A and C are ready; B is not, because its adapter is a verified hard dependency. A wins the exact key: its cost of delay and consequential decision value are high, its time to trustworthy evidence is short, its validated user value is direct, and it creates an unlock for B. C is narrower but has low decision value and no response-path unlock. This is a qualitative comparison, not a score.</p>
+          <div class="card">
+            <h3>3. Spine, lane, and gate</h3>
+            <p><strong>Sequential spine:</strong> authenticated ingress → A’s alert → operator acknowledgment → observed decision.</p>
+            <p><strong>Legitimate parallel lane:</strong> draft the audit/safety contract while A is built. It has a separate owner, bounded scope, and a clear join: the acknowledgment demo cannot pass until the contract’s recorded fields are inspected.</p>
+            <p><strong>Milestone threshold:</strong> in 8 of 10 representative signal attempts, the intended operator notices the alert, acknowledges it within the declared window, and the audit record is complete.</p>
+            <p><strong>Falsifier:</strong> if acknowledgment is missing, ambiguous, or below the threshold, retract the approach and investigate signal, delivery, or interaction before expanding.</p>
+          </div>
+          <p><strong>Decision:</strong> <em>Stop</em> if the job is not valuable or the safety boundary fails; <em>Pivot</em> if operators see the alert but cannot trust or interpret it; <em>Continue</em> if the threshold holds, then reslice toward controlled delivery and only later broader routing and resilience. The first order optimizes for the earliest trustworthy answer; it does not confuse a dashboard with response value.</p>
         </section>
 
         <section id="failures">
