@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical Aegis Method field guide to ordering engineering work for the earliest trustworthy evidence of user value.">
+  <title>Optimal Ordering — Aegis Method Lite</title>
+  <style>
+    :root {
+      --ink: #151a2a;
+      --muted: #596176;
+      --paper: #f7f8fb;
+      --panel: #ffffff;
+      --line: #dbe0ea;
+      --indigo: #343e93;
+      --blue: #1e67a9;
+      --warm: #c4572d;
+      --warm-pale: #fff1eb;
+      --blue-pale: #eef5fc;
+      --indigo-pale: #eff0fb;
+      --shadow: 0 10px 28px rgba(25, 32, 57, .07);
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+    a { color: var(--indigo); text-underline-offset: 3px; }
+    a:hover { color: var(--warm); }
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 3px solid #f2a36f;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    .skip-link {
+      position: absolute; left: 1rem; top: .75rem; z-index: 4;
+      transform: translateY(-180%); background: var(--ink); color: #fff;
+      padding: .55rem .8rem; border-radius: 6px;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    .page { max-width: 1420px; margin: 0 auto; padding: 1.25rem 2.5rem 5rem; }
+    .masthead { display: flex; justify-content: space-between; gap: 2rem; align-items: center; padding: .4rem 0 1.25rem; border-bottom: 1px solid var(--line); }
+    .kicker { margin: 0; color: var(--indigo); font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .edition { margin: 0; color: var(--muted); font-size: .78rem; font-weight: 650; text-align: right; }
+    .layout { display: grid; grid-template-columns: 190px minmax(0, 850px); gap: 3.5rem; justify-content: center; }
+    .rail { position: sticky; top: 1.25rem; align-self: start; padding-top: 2.2rem; }
+    .rail p { margin: 0 0 .7rem; color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .rail a { display: block; padding: .25rem 0; color: var(--muted); font-size: .79rem; line-height: 1.35; text-decoration: none; }
+    .rail a:hover { color: var(--indigo); text-decoration: underline; }
+    main { min-width: 0; }
+    .hero { padding: 4.6rem 0 4rem; border-bottom: 1px solid var(--line); }
+    h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; line-height: 1.14; letter-spacing: -.025em; }
+    h1 { max-width: 780px; margin: 0 0 1.25rem; font-size: clamp(2.65rem, 6vw, 5.5rem); font-weight: 700; }
+    .dek { max-width: 730px; margin: 0; color: #30384d; font-size: clamp(1.16rem, 2vw, 1.45rem); line-height: 1.45; }
+    .hero-note { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 2rem; }
+    .tag { border: 1px solid var(--line); border-radius: 999px; padding: .35rem .7rem; color: var(--muted); background: var(--panel); font-size: .76rem; font-weight: 750; }
+    .tag.warm { border-color: #e4b09a; color: #963815; background: var(--warm-pale); }
+    section { padding: 3.6rem 0; border-bottom: 1px solid var(--line); scroll-margin-top: 1rem; }
+    h2 { margin: 0 0 1.1rem; font-size: clamp(1.95rem, 3vw, 2.7rem); }
+    h3 { margin: 2rem 0 .55rem; font-size: 1.45rem; }
+    h4 { margin: 1.25rem 0 .35rem; font-size: .9rem; letter-spacing: .06em; text-transform: uppercase; color: var(--indigo); }
+    p { margin: .75rem 0; }
+    .lead { max-width: 720px; color: #333b50; font-size: 1.08rem; }
+    .claim { margin: 1.5rem 0; padding: 1rem 1.2rem; border-left: 4px solid var(--warm); background: var(--warm-pale); font-family: Georgia, "Times New Roman", serif; font-size: 1.28rem; line-height: 1.4; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .card { padding: 1.1rem 1.15rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); box-shadow: var(--shadow); }
+    .card h3, .card h4 { margin-top: 0; }
+    .card p:last-child { margin-bottom: 0; }
+    .number { display: inline-grid; width: 1.65rem; height: 1.65rem; margin-right: .35rem; place-items: center; border-radius: 50%; color: #fff; background: var(--indigo); font-size: .76rem; font-weight: 800; vertical-align: .1rem; }
+    .small { color: var(--muted); font-size: .88rem; }
+    .table-wrap { overflow-x: auto; margin: 1.25rem 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+    table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .9rem; }
+    th, td { padding: .75rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--indigo); background: var(--indigo-pale); font-size: .75rem; letter-spacing: .07em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    code { padding: .1rem .3rem; border-radius: 4px; color: #26316e; background: var(--blue-pale); font-size: .88em; }
+    pre { overflow-x: auto; margin: 1.3rem 0; padding: 1.2rem; border: 1px solid #cfd7e6; border-radius: var(--radius); color: #e8edf8; background: #171d30; font-size: .79rem; line-height: 1.65; }
+    .formula { margin: 1.3rem 0; padding: 1.3rem; border: 1px solid #b9c7e0; border-radius: var(--radius); color: #202c60; background: var(--blue-pale); text-align: center; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1rem, 2vw, 1.25rem); }
+    .formula small { display: block; margin-top: .45rem; color: var(--muted); font-family: ui-sans-serif, sans-serif; font-size: .73rem; }
+    .diagram { margin: 1.5rem 0; padding: 1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+    .diagram svg { display: block; width: 100%; height: auto; }
+    .diagram figcaption { margin: .75rem .2rem 0; color: var(--muted); font-size: .78rem; }
+    .ladder-label { font-size: 12px; font-weight: 750; fill: #151a2a; }
+    .ladder-sub { font-size: 10px; fill: #596176; }
+    .step-list { counter-reset: steps; list-style: none; margin: 1.6rem 0 0; padding: 0; }
+    .step-list > li { counter-increment: steps; position: relative; margin: 0; padding: 0 0 1.35rem 3.1rem; border-left: 1px solid #bdc6d8; }
+    .step-list > li::before { content: counter(steps); position: absolute; left: -1rem; top: -.1rem; display: grid; width: 1.95rem; height: 1.95rem; place-items: center; border: 4px solid var(--paper); border-radius: 50%; color: #fff; background: var(--indigo); font-size: .72rem; font-weight: 800; }
+    .step-list > li:last-child { border-left-color: transparent; }
+    .step-list strong { color: var(--ink); }
+    .contract { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem 1rem; margin-top: 1.25rem; }
+    .field { min-height: 4.1rem; padding: .7rem .8rem; border: 1px dashed #aeb8ca; border-radius: 7px; background: var(--panel); }
+    .field strong { display: block; color: var(--indigo); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; }
+    .field span { color: var(--muted); font-size: .85rem; }
+    .checklist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem 1.25rem; padding: 0; list-style: none; }
+    .checklist li { position: relative; padding-left: 1.55rem; }
+    .checklist li::before { content: "□"; position: absolute; left: 0; color: var(--warm); font-size: 1.1rem; font-weight: 800; }
+    .footer-note { padding-top: 2rem; color: var(--muted); font-size: .84rem; }
+    @media (max-width: 940px) {
+      .page { padding-inline: 1.25rem; }
+      .layout { display: block; }
+      .rail { position: static; display: flex; gap: .35rem .9rem; flex-wrap: wrap; padding: .8rem 0; border-bottom: 1px solid var(--line); }
+      .rail p { width: 100%; margin-bottom: 0; }
+      .rail a { display: inline-block; padding: .2rem 0; }
+      .hero { padding-top: 3.4rem; }
+    }
+    @media (max-width: 640px) {
+      .masthead { align-items: flex-start; flex-direction: column; gap: .35rem; }
+      .edition { text-align: left; }
+      .hero { padding: 2.8rem 0 3rem; }
+      section { padding: 2.7rem 0; }
+      .grid-2, .grid-3, .contract, .checklist { grid-template-columns: 1fr; }
+      .diagram { margin-inline: -.2rem; padding: .65rem; }
+      h1 { font-size: 2.7rem; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <div class="page">
+    <header class="masthead" aria-label="Document header">
+      <p class="kicker">Aegis Method Lite / Field guide</p>
+      <p class="edition">Status: generic working guidance · no proof of optimality</p>
+    </header>
+
+    <div class="layout">
+      <nav class="rail" aria-label="Section navigation">
+        <p>On this page</p>
+        <a href="#problem">The ordering problem</a>
+        <a href="#mvp">MVP and the ladder</a>
+        <a href="#evidence">Evidence gates</a>
+        <a href="#graphs">Two graphs</a>
+        <a href="#algorithm">Algorithm</a>
+        <a href="#contracts">Contracts</a>
+        <a href="#example">Worked example</a>
+        <a href="#checklist">Field checklist</a>
+      </nav>
+
+      <main id="content">
+        <header class="hero">
+          <p class="kicker">Execution order is a product decision</p>
+          <h1>Ship the next piece of truth.</h1>
+          <p class="dek">Optimal ordering is the discipline of making the earliest trustworthy user value visible, then letting evidence change what comes next.</p>
+          <div class="hero-note" aria-label="Guide attributes">
+            <span class="tag warm">Evidence before architecture</span>
+            <span class="tag">Adaptive heuristic</span>
+            <span class="tag">User journey first</span>
+            <span class="tag">Aegis Method Lite</span>
+          </div>
+        </header>
+
+        <section id="problem">
+          <h2>The ordering problem</h2>
+          <p class="lead">A backlog can be tidy, prioritized, and topologically valid while still being the wrong order for a product. Architecture inventories answer “what exists?” Dependencies answer “what can happen?” Neither answers “what should we learn and deliver next?”</p>
+          <div class="claim">A plan can be topologically valid and still be product-order wrong.</div>
+          <p>Importance is conditional. A large feature may matter eventually, but a small experiment may matter more now if it can settle the assumption that makes the rest of the plan safe. Order changes the evidence available, the cost of being wrong, the options kept open, and the amount of rework that follows.</p>
+          <div class="grid-2">
+            <article class="card">
+              <h3>Component inventory</h3>
+              <p>“Build the data model, then the API, then the interface.” This describes parts. It can produce impressive completion with no coherent user journey.</p>
+            </article>
+            <article class="card">
+              <h3>Value order</h3>
+              <p>“Let one real user attempt the job, observe the result, and decide.” This describes evidence. Parts are pulled through only when the journey needs them.</p>
+            </article>
+          </div>
+          <p class="small">Optimal here is practical, not mathematical: a reasoned order that is recomputed as reality speaks. The objective is trustworthy evidence early, not a claim that uncertainty can be eliminated.</p>
+        </section>
+
+        <section id="mvp">
+          <h2>MVP means a coherent test, not a cheap pile</h2>
+          <p class="lead">The minimum viable product is the smallest coherent end-to-end path where a real user attempts a meaningful job, the system produces an observable result, and the team can make a Stop, Pivot, or Continue decision.</p>
+          <div class="grid-3">
+            <article class="card"><h3>Real job</h3><p>Someone with a stake tries to accomplish something that matters outside the ticket system.</p></article>
+            <article class="card"><h3>Observable result</h3><p>The attempt creates evidence: a response, decision, completed action, failure, delay, or refusal.</p></article>
+            <article class="card"><h3>Decision rights</h3><p>The team has a threshold and a next move. “Interesting” without a decision is not an MVP.</p></article>
+          </div>
+          <p>An MVP is not permission for poor quality, and it is not the cheapest collection of features. A narrow path can still require reliability, privacy, accessibility, safety, or operational work when those are part of the promise. “Minimum” describes the scope of the learning journey. “Viable” describes whether the journey can be trusted enough to judge.</p>
+
+          <h3 id="ladder">The vehicle ladder</h3>
+          <p>Use a vehicle metaphor to force a useful question: does every rung transport the user? Start with a complete but narrow vehicle, then make the same journey more controlled, usable, lovable, and broad. Do not build wheels, axles, and seats as separate milestones while the vehicle remains unable to move.</p>
+          <figure class="diagram">
+            <svg viewBox="0 0 760 330" role="img" aria-labelledby="ladder-title ladder-desc">
+              <title id="ladder-title">Vehicle ladder from skateboard to car</title>
+              <desc id="ladder-desc">Five original line drawings rise from a skateboard labeled testable, through scooter controlled, bicycle usable, motorcycle lovable, to car broad and resilient. Each sits on a road labeled real user journey.</desc>
+              <rect x="18" y="270" width="724" height="2" fill="#343e93"/>
+              <text x="380" y="307" text-anchor="middle" class="ladder-sub">one continuous road: a real user job → observable result → decision</text>
+              <g transform="translate(35 0)">
+                <text x="55" y="30" text-anchor="middle" class="ladder-label">SKATEBOARD</text><text x="55" y="47" text-anchor="middle" class="ladder-sub">Testable</text>
+                <circle cx="25" cy="248" r="11" fill="none" stroke="#343e93" stroke-width="3"/><circle cx="86" cy="248" r="11" fill="none" stroke="#343e93" stroke-width="3"/><path d="M28 228 Q55 238 83 228" fill="none" stroke="#343e93" stroke-width="5"/>
+              </g>
+              <g transform="translate(181 0)">
+                <text x="55" y="30" text-anchor="middle" class="ladder-label">SCOOTER</text><text x="55" y="47" text-anchor="middle" class="ladder-sub">Controlled</text>
+                <circle cx="25" cy="248" r="11" fill="none" stroke="#1e67a9" stroke-width="3"/><circle cx="86" cy="248" r="11" fill="none" stroke="#1e67a9" stroke-width="3"/><path d="M25 226 H73 L61 178 H48 M61 178 L74 164" fill="none" stroke="#1e67a9" stroke-width="5"/>
+              </g>
+              <g transform="translate(327 0)">
+                <text x="55" y="30" text-anchor="middle" class="ladder-label">BICYCLE</text><text x="55" y="47" text-anchor="middle" class="ladder-sub">Usable</text>
+                <circle cx="24" cy="238" r="18" fill="none" stroke="#343e93" stroke-width="3"/><circle cx="87" cy="238" r="18" fill="none" stroke="#343e93" stroke-width="3"/><path d="M24 238 L48 192 L69 238 L24 238 M48 192 H69 L87 238 M48 192 L39 180 M69 238 L77 220" fill="none" stroke="#343e93" stroke-width="3"/>
+              </g>
+              <g transform="translate(473 0)">
+                <text x="55" y="30" text-anchor="middle" class="ladder-label">MOTORCYCLE</text><text x="55" y="47" text-anchor="middle" class="ladder-sub">Lovable</text>
+                <circle cx="24" cy="242" r="19" fill="none" stroke="#c4572d" stroke-width="3"/><circle cx="88" cy="242" r="19" fill="none" stroke="#c4572d" stroke-width="3"/><path d="M24 242 L42 205 H70 L88 242 M42 205 L30 189 H17 M70 205 L80 184 H95" fill="none" stroke="#c4572d" stroke-width="4"/>
+              </g>
+              <g transform="translate(619 0)">
+                <text x="55" y="30" text-anchor="middle" class="ladder-label">CAR</text><text x="55" y="47" text-anchor="middle" class="ladder-sub">Broad / resilient</text>
+                <circle cx="23" cy="245" r="15" fill="none" stroke="#1e67a9" stroke-width="3"/><circle cx="90" cy="245" r="15" fill="none" stroke="#1e67a9" stroke-width="3"/><path d="M10 230 L24 194 H72 L103 230 V245 H10 Z M31 194 L43 177 H69 L83 194" fill="none" stroke="#1e67a9" stroke-width="4"/>
+              </g>
+            </svg>
+            <figcaption>Five complete forms, drawn for this guide. The ladder adapts the useful lesson in Henrik Kniberg’s <a href="https://blog.crisp.se/2016/01/25/henrikkniberg/making-sense-of-mvp">Making Sense of MVP</a>; this visual and wording are original and paraphrased.</figcaption>
+          </figure>
+          <p class="small">The ladder is not a mandatory release plan. It is a guardrail against component milestones and a reminder that a later rung must preserve the user’s ability to travel.</p>
+        </section>
+
+        <section id="evidence">
+          <h2>Three evidence gates</h2>
+          <p class="lead">“Working” is too vague to order work. Name which kind of evidence the next slice must earn.</p>
+          <div class="grid-3">
+            <article class="card"><h3>Earliest Testable</h3><p>A real or representative user can attempt the core job through a narrow path. The system exposes enough of its behavior to falsify the riskiest assumption.</p><h4>Gate</h4><p class="small">Attempt recorded; result observable; falsifier and decision threshold are explicit.</p></article>
+            <article class="card"><h3>Earliest Usable</h3><p>The path can be repeated by its intended user without special rescue from the builder. It handles the normal path and communicates the important failure states.</p><h4>Gate</h4><p class="small">A user completes the job with acceptable effort, clarity, and reliability for the declared context.</p></article>
+            <article class="card"><h3>Earliest Lovable</h3><p>The experience earns preference: it is clear, trustworthy, considerate, and meaningfully better than the workaround for its chosen job.</p><h4>Gate</h4><p class="small">Observed preference or repeat behavior crosses a stated threshold; delight is evidence, not a mood.</p></article>
+          </div>
+          <p>These gates are nested, not cosmetic labels. A “lovable” surface that cannot be trusted is not lovable. A broad feature set that has never been testable is inventory, not a product.</p>
+        </section>
+
+        <section id="why-order">
+          <h2>Why order changes the outcome</h2>
+          <p>Execution order changes what the team knows before it commits further. It changes cost of delay, risk exposure, rework, option preservation, and which downstream work can safely unlock.</p>
+          <div class="grid-2">
+            <article class="card"><h3>Information value</h3><p>Prioritize work that can settle a consequential unknown. A cheap falsifier may outrank a large build.</p></article>
+            <article class="card"><h3>Cost of delay</h3><p>Some learning loses value if postponed: a safety concern, a contractual boundary, or a decision that gates a launch.</p></article>
+            <article class="card"><h3>Rework and reversibility</h3><p>Test high-impact, hard-to-undo assumptions before polishing choices that depend on them.</p></article>
+            <article class="card"><h3>Downstream unlock</h3><p>Prefer a slice that opens several safe next moves, while discounting “unlock” claims that are only habits or preferences.</p></article>
+          </div>
+          <div class="claim">Importance is not a permanent property of an issue. It is a relationship between the issue, the current outcome, and the uncertainty that still matters.</div>
+        </section>
+
+        <section id="slices">
+          <h2>Vertical slice or component milestone?</h2>
+          <p class="lead">A vertical slice crosses the minimum layers needed to prove a user outcome. A component milestone completes one layer. Both are real work; they do not produce the same evidence.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th scope="col">Shape</th><th scope="col">Example</th><th scope="col">Evidence earned</th><th scope="col">Typical danger</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Vertical slice</strong></td><td>One operator sends one request, receives one clear result, and can act on it.</td><td>Does the end-to-end promise work for a real job?</td><td>Scope can be mistaken for production breadth.</td></tr>
+                <tr><td><strong>Component milestone</strong></td><td>Finish the generalized service, schema, and client library before any journey is runnable.</td><td>Is a part complete according to its own interface?</td><td>Completion masquerades as product progress.</td></tr>
+                <tr><td><strong>Required infrastructure</strong></td><td>Identity, audit, rollback, or a rate limit needed to run the narrow journey safely.</td><td>Can the slice be trusted in its declared context?</td><td>It becomes a “basecamp” with no evidence gate.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Infrastructure is product work when it is a hard dependency or a material risk reducer for the promised slice. It is not itself user value merely because it is difficult. Proof machinery must not masquerade as a product milestone: tests, dashboards, and reconciliation make a claim trustworthy; they do not automatically make the claim valuable.</p>
+        </section>
+
+        <section id="graphs">
+          <h2>Two graphs, two questions</h2>
+          <p class="lead">Do not confuse the dependency graph with the delivery order. One describes possibility. The other is a decision about value now.</p>
+          <div class="grid-2">
+            <article class="card">
+              <h3>Dependency DAG</h3>
+              <p>Directed edges say what must precede what. It should be acyclic after splitting cycles into an interface, a stub, or an experiment.</p>
+              <p class="small"><strong>Question:</strong> what is possible?</p>
+            </article>
+            <article class="card">
+              <h3>Delivery sequence</h3>
+              <p>A time-ordered choice among ready work. It considers evidence value, risk, delay, coordination, and the current user promise.</p>
+              <p class="small"><strong>Question:</strong> what is valuable now?</p>
+            </article>
+          </div>
+          <h3>Type every edge</h3>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th scope="col">Edge type</th><th scope="col">Meaning</th><th scope="col">Rule</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Hard</strong></td><td>The later item cannot safely or meaningfully execute without the earlier one.</td><td>Only a verified hard edge blocks. Name the property that makes it hard.</td></tr>
+                <tr><td><strong>Evidence</strong></td><td>The earlier item supplies an observation needed to choose or judge the later one.</td><td>It changes confidence, not necessarily feasibility.</td></tr>
+                <tr><td><strong>Resource</strong></td><td>People, environments, permissions, or scarce equipment collide.</td><td>Schedule the collision; do not invent a conceptual dependency.</td></tr>
+                <tr><td><strong>Preference</strong></td><td>A convention, aesthetic, or default habit says “do this first.”</td><td>Challenge it. Preference never blocks by itself.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Challenge and rewrite accidental edges. If two items appear cyclic, split the interface from the implementation, create a thin stub, or run an experiment that resolves the mutual assumption. A cycle is usually a signal that the work is too coarsely sliced.</p>
+          <figure class="diagram">
+            <svg viewBox="0 0 760 180" role="img" aria-labelledby="dag-title dag-desc">
+              <title id="dag-title">Dependency graph and delivery sequence</title>
+              <desc id="dag-desc">A dependency graph shows possible order from a foundation to a slice and then expansion. A separate arrow below shows the chosen value-first sequence, which may start with a thin slice rather than the largest foundation.</desc>
+              <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#343e93"/></marker></defs>
+              <text x="18" y="25" class="ladder-label">DEPENDENCY DAG · what is possible</text>
+              <rect x="22" y="42" width="140" height="40" rx="7" fill="#eff0fb" stroke="#343e93"/><text x="92" y="67" text-anchor="middle" class="ladder-label">safe seam</text>
+              <rect x="218" y="42" width="140" height="40" rx="7" fill="#eef5fc" stroke="#1e67a9"/><text x="288" y="67" text-anchor="middle" class="ladder-label">narrow slice</text>
+              <rect x="414" y="42" width="140" height="40" rx="7" fill="#fff1eb" stroke="#c4572d"/><text x="484" y="67" text-anchor="middle" class="ladder-label">broader path</text>
+              <path d="M162 62 H214" stroke="#343e93" stroke-width="2" marker-end="url(#arrow)"/><path d="M358 62 H410" stroke="#343e93" stroke-width="2" marker-end="url(#arrow)"/>
+              <text x="18" y="115" class="ladder-label">DELIVERY SEQUENCE · what is valuable now</text>
+              <rect x="22" y="132" width="140" height="32" rx="7" fill="#fff1eb" stroke="#c4572d"/><text x="92" y="153" text-anchor="middle" class="ladder-label">narrow slice</text>
+              <rect x="218" y="132" width="140" height="32" rx="7" fill="#eff0fb" stroke="#343e93"/><text x="288" y="153" text-anchor="middle" class="ladder-label">safe seam</text>
+              <rect x="414" y="132" width="140" height="32" rx="7" fill="#eef5fc" stroke="#1e67a9"/><text x="484" y="153" text-anchor="middle" class="ladder-label">broader path</text>
+              <path d="M162 148 H214" stroke="#c4572d" stroke-width="2" marker-end="url(#arrow)"/><path d="M358 148 H410" stroke="#c4572d" stroke-width="2" marker-end="url(#arrow)"/>
+            </svg>
+            <figcaption>The graphs can agree on the eventual shape and disagree on the next move. That disagreement is the point of ordering.</figcaption>
+          </figure>
+        </section>
+
+        <section id="lanes">
+          <h2>One product spine, a few useful lanes</h2>
+          <p class="lead">Keep a sequential spine for the user promise. Add parallel lanes only where parallel work is independently useful and has a clear join.</p>
+          <figure class="diagram">
+            <svg viewBox="0 0 760 240" role="img" aria-labelledby="lanes-title lanes-desc">
+              <title id="lanes-title">Sequential spine with selective parallel lanes</title>
+              <desc id="lanes-desc">A main horizontal spine connects define, slice, observe, and decide. Two smaller lanes run in parallel for audit readiness and usability research, joining at the observe gate.</desc>
+              <defs><marker id="arrow2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#343e93"/></marker></defs>
+              <text x="18" y="23" class="ladder-label">SEQUENTIAL PRODUCT SPINE</text>
+              <g fill="#eff0fb" stroke="#343e93" stroke-width="1.5"><rect x="18" y="39" width="125" height="42" rx="7"/><rect x="190" y="39" width="125" height="42" rx="7"/><rect x="362" y="39" width="125" height="42" rx="7"/><rect x="534" y="39" width="125" height="42" rx="7"/></g>
+              <g class="ladder-label"><text x="80" y="64" text-anchor="middle">define promise</text><text x="252" y="64" text-anchor="middle">build slice</text><text x="424" y="64" text-anchor="middle">observe</text><text x="596" y="64" text-anchor="middle">decide</text></g>
+              <g stroke="#343e93" stroke-width="2" marker-end="url(#arrow2)"><path d="M143 60 H186"/><path d="M315 60 H358"/><path d="M487 60 H530"/></g>
+              <text x="18" y="122" class="ladder-label">SELECTIVE PARALLEL LANES</text>
+              <rect x="18" y="140" width="260" height="38" rx="7" fill="#eef5fc" stroke="#1e67a9"/><text x="148" y="164" text-anchor="middle" class="ladder-label">audit / safety contract</text>
+              <rect x="18" y="190" width="260" height="38" rx="7" fill="#fff1eb" stroke="#c4572d"/><text x="148" y="214" text-anchor="middle" class="ladder-label">usability observation</text>
+              <path d="M278 159 H424 V83" fill="none" stroke="#1e67a9" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow2)"/><path d="M278 209 H424 V83" fill="none" stroke="#c4572d" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow2)"/>
+              <text x="452" y="112" class="ladder-sub">explicit join / gate</text>
+            </svg>
+            <figcaption>Parallelism is valid when the work is independently useful, contracts are clear, work in progress is bounded, and an explicit gate joins it to the spine.</figcaption>
+          </figure>
+          <p>Fake parallelism is serial work hidden in two columns. It increases coordination and makes the first coherent evidence later. Keep the number of lanes small enough that a person can name the join condition without a meeting.</p>
+        </section>
+
+        <section id="objective">
+          <h2>A decision objective, without fake precision</h2>
+          <p>For each ready candidate, ask how much trustworthy value and learning it can buy before more time, coordination, and irreversible commitment. Use ordinal scales such as low, medium, and high. The formula is a thinking aid, not a measurement system.</p>
+          <div class="formula">Choose the next slice that maximizes <strong>(validated user value + learning + important risk retired + downstream unlock)</strong> ÷ <strong>(time to evidence + coordination cost + irreversibility cost)</strong><small>subject to hard safety, authority, and dependency gates · use explicit judgments, not invented decimals</small></div>
+          <p>“Value” must be tied to the current outcome. “Risk retired” must name a consequential risk. “Unlock” must identify a real next decision. Penalize slices whose evidence arrives late, whose coordination surface is broad, or whose commitment is hard to undo. A small experiment can win because it changes the order of everything after it.</p>
+        </section>
+
+        <section id="algorithm">
+          <h2>The practical ordering algorithm</h2>
+          <p class="lead">Run this as a loop, not as a one-time planning ceremony. The current milestone is a bet with a gate; new evidence is allowed to rewrite the bet.</p>
+          <ol class="step-list">
+            <li><strong>Observe current reality.</strong> Inspect the running behavior, constraints, recent changes, users, incidents, and available evidence. Record what is known, unknown, and merely assumed.</li>
+            <li><strong>Define the user, job, outcome, and non-goals.</strong> State who attempts what, what observable result matters, and what this order deliberately does not solve.</li>
+            <li><strong>Rewrite the backlog as outcomes or experiments.</strong> Replace “build service X” with a claim about user behavior, a risk, or a decision the work will settle.</li>
+            <li><strong>Find the core loop.</strong> Trace the smallest path from trigger to user action to system result to next decision. Everything else is an extension until proven otherwise.</li>
+            <li><strong>Type dependency edges.</strong> Label hard, evidence, resource, and preference edges. Verify blockers. Challenge accidental edges; split cycles with seams, stubs, or experiments.</li>
+            <li><strong>Identify the Earliest Testable slice.</strong> Pick the smallest coherent journey that can expose the riskiest consequential assumption and produce observable evidence.</li>
+            <li><strong>Filter the candidate set.</strong> Remove work that is not ready, unsafe, unauthorized, blocked by a verified hard edge, or incoherent with the current user promise.</li>
+            <li><strong>Rank the ready set.</strong> Use the objective above lexicographically: hard gates first; then earliest evidence, decision value, risk retired, unlock, cost of delay, and reversibility. Break ties toward the narrower slice.</li>
+            <li><strong>Build the spine and lanes.</strong> Put the chosen user journey in sequence. Add only independently useful parallel work with bounded WIP, contracts, and an explicit join gate.</li>
+            <li><strong>Define the milestone contract.</strong> Write the user promise, complete demo journey, exact issue order, evidence threshold, falsifier, deferrals, and Stop/Pivot/Continue rule before execution.</li>
+            <li><strong>Execute the current milestone only.</strong> Keep scope bounded. Do not silently spend the next decision’s budget while the current evidence is still unresolved.</li>
+            <li><strong>Reconcile evidence.</strong> Compare the observed result with the acceptance evidence, metric baseline, threshold, and falsifier. Resolve against what landed and what the user actually experienced.</li>
+            <li><strong>Stop, Pivot, or Continue.</strong> Stop when the premise is falsified or value is absent; Pivot when evidence changes the slice or strategy; Continue when the gate is met and the next assumption is worth testing.</li>
+            <li><strong>Recompute, reslice, or end.</strong> Re-type dependencies, reorder the remaining work, split oversized slices, or close the effort when the outcome is met. The order is a living artifact.</li>
+          </ol>
+          <h3>Compact pseudocode</h3>
+          <pre><code>while outcome_not_met:
+  reality = observe_system_and_user()
+  goal, non_goals = define_job_and_outcome(reality)
+  candidates = rewrite_as_outcomes_or_experiments(backlog)
+  graph = type_and_verify_edges(candidates)
+  slice = smallest_coherent_testable_path(goal, graph)
+  ready = filter(candidates, ready_and_safe_and_coherent)
+  next = argmax(ready, by=ordinal_value_of_evidence_per_cost)
+  spine, lanes = arrange(next, parallel_only_if_join_is_explicit)
+  contract = write_gate(spine, lanes, falsifier, threshold)
+  execute(contract)
+  result = reconcile_against_landed_user_evidence(contract)
+  decision = stop_pivot_continue(result)
+  backlog = recompute_and_reslice(backlog, graph, decision)
+  if decision == STOP: break</code></pre>
+        </section>
+
+        <section id="contracts">
+          <h2>Make order inspectable with contracts</h2>
+          <p class="lead">An issue is a memory of a decision, not a command to a component. A milestone is a promise about a journey, not a count of closed tickets.</p>
+          <h3>Issue contract template</h3>
+          <div class="contract" aria-label="Issue contract fields">
+            <div class="field"><strong>Outcome</strong><span>What user or system result should change?</span></div>
+            <div class="field"><strong>Behavior</strong><span>What will a person or system actually do?</span></div>
+            <div class="field"><strong>Hypothesis</strong><span>What must be true for this to be worth doing?</span></div>
+            <div class="field"><strong>Slice / experiment</strong><span>What is the narrowest evidence-producing form?</span></div>
+            <div class="field"><strong>Acceptance evidence</strong><span>What observation type would count?</span></div>
+            <div class="field"><strong>Metric / baseline / threshold</strong><span>What is measured, from where, and how much is enough?</span></div>
+            <div class="field"><strong>Typed dependencies</strong><span>Hard, evidence, resource, or preference edges.</span></div>
+            <div class="field"><strong>Time to evidence</strong><span>How soon can the claim be judged?</span></div>
+            <div class="field"><strong>Risks / irreversibility</strong><span>What could hurt, constrain, or be costly to undo?</span></div>
+            <div class="field"><strong>Falsifier</strong><span>What observation would retract this issue or approach?</span></div>
+            <div class="field"><strong>Stop / Pivot / Continue</strong><span>What result triggers each decision?</span></div>
+            <div class="field"><strong>Unlocks</strong><span>Which next decision becomes safer or possible?</span></div>
+          </div>
+          <h3>Milestone contract</h3>
+          <div class="card">
+            <p><strong>User promise:</strong> one sentence a user could recognize.</p>
+            <p><strong>Complete demo journey:</strong> the trigger, action, result, and decision from start to finish.</p>
+            <p><strong>Exact order:</strong> sequential issues, parallel lanes, and explicit join or gate.</p>
+            <p><strong>Product value:</strong> why this journey matters now.</p>
+            <p><strong>Hypothesis and metric:</strong> the belief, observed measure, baseline, and threshold.</p>
+            <p><strong>Falsifier:</strong> the result that would make the approach wrong.</p>
+            <p><strong>Explicit deferrals:</strong> what is intentionally not in this milestone.</p>
+            <p><strong>Stop / Pivot / Continue:</strong> the decision table after observation.</p>
+          </div>
+          <p class="claim">A milestone closes against user-journey evidence, not because tickets closed.</p>
+        </section>
+
+        <section id="example">
+          <h2>Worked example: incident response</h2>
+          <p class="lead">Imagine a team helping an on-call operator respond to a service incident. The domain is generic; the ordering lesson is the point.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th scope="col">Component-first order</th><th scope="col">Value-first ladder</th></tr></thead>
+              <tbody>
+                <tr><td>General event schema → alert platform → routing rules → dashboard → acknowledgment UI → escalation.</td><td><strong>Testable:</strong> one real signal → one alert → one operator acknowledgment, with an observable audit record.</td></tr>
+                <tr><td>It may be technically coherent, but the team learns late whether an operator trusts the alert, sees it, or knows what to do.</td><td><strong>Controlled:</strong> add reliable delivery, deduplication, and a clear failure state for the chosen channel.</td></tr>
+                <tr><td>More components create more surfaces to maintain before the core response loop is judged.</td><td><strong>Usable:</strong> add the normal incident context, repeatable handoff, and the minimum recovery path.</td></tr>
+                <tr><td>Broad coverage is mistaken for readiness.</td><td><strong>Lovable / broad:</strong> improve signal quality, preference, escalation, and resilience only after evidence justifies expansion.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The first order optimizes for component completion. The second optimizes for the earliest trustworthy answer to: “When a real signal matters, can an operator notice it, acknowledge it, and make the next decision?” If that answer is no, the backlog should change before the dashboard gets prettier.</p>
+        </section>
+
+        <section id="failures">
+          <h2>Failure patterns to catch early</h2>
+          <div class="grid-2">
+            <article class="card"><h3>Global backlog ranking</h3><p>One permanent ranking ignores changing uncertainty and the current outcome.</p></article>
+            <article class="card"><h3>Infrastructure basecamp first</h3><p>A long platform phase delays evidence and makes sunk cost feel like strategy.</p></article>
+            <article class="card"><h3>Fake parallelism</h3><p>Two lanes share hidden decisions, so coordination grows while the journey remains untestable.</p></article>
+            <article class="card"><h3>Proof-as-product</h3><p>Tests, dashboards, and merged code are treated as user value without a user result.</p></article>
+            <article class="card"><h3>Milestone by merged tickets</h3><p>Ticket closure says little about whether the complete journey works.</p></article>
+            <article class="card"><h3>Architecture rewrite before learning</h3><p>High-irreversibility decisions are made before the riskiest assumptions are observed.</p></article>
+            <article class="card"><h3>Predetermined ladder</h3><p>Every rung is scheduled in advance, leaving no room for a falsifier to change direction.</p></article>
+            <article class="card"><h3>Vague metrics and long preflight</h3><p>“Improve experience” cannot trigger a decision, and overlong setup hides the absence of a slice.</p></article>
+          </div>
+        </section>
+
+        <section id="artifacts">
+          <h2>The algorithm’s output</h2>
+          <p>At the end of an ordering pass, you should have durable artifacts that let another person reconstruct why this sequence exists:</p>
+          <div class="grid-3">
+            <article class="card"><h3>Product spine</h3><p>The sequential user journey and its current promise.</p></article>
+            <article class="card"><h3>Issue waves</h3><p>Bounded groups ordered by evidence gates, not component labels.</p></article>
+            <article class="card"><h3>Parallel lanes</h3><p>Independent work with contracts, WIP limits, and joins.</p></article>
+            <article class="card"><h3>Dependency rewrite ledger</h3><p>Verified blockers, challenged edges, and cycle splits.</p></article>
+            <article class="card"><h3>Milestone gate contracts</h3><p>Promises, metrics, falsifiers, deferrals, and decisions.</p></article>
+            <article class="card"><h3>Parking lot and evidence trail</h3><p>Deferred ideas plus the observations that changed the order.</p></article>
+          </div>
+        </section>
+
+        <section id="principles">
+          <h2>The ordering discipline inside Aegis Method</h2>
+          <p>Optimal ordering is not a sixth move bolted onto the method. It is the discipline inside the five moves:</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th scope="col">Aegis principle</th><th scope="col">Ordering implication</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Evidence before architecture</strong></td><td>Observe the current journey and its constraints before committing to a large dependency order.</td></tr>
+                <tr><td><strong>Strategy before plan</strong></td><td>Choose the current outcome and uncertainty before ranking issues.</td></tr>
+                <tr><td><strong>Issues as memory</strong></td><td>Store the order, contracts, assumptions, and revisions where the next person can inspect them.</td></tr>
+                <tr><td><strong>Falsification before confidence</strong></td><td>Every slice names what would change the order or kill the approach.</td></tr>
+                <tr><td><strong>Closure against reality</strong></td><td>Close milestones against observed journey evidence, not intention or bookkeeping.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>What this does not claim</h3>
+          <ul>
+            <li>It does not produce a provably optimal schedule or remove judgment.</li>
+            <li>It does not say component work is bad, only that its product value must be named and evidenced.</li>
+            <li>It does not make safety, authority, quality, or compliance optional in a narrow MVP.</li>
+            <li>It does not require sequential work everywhere; it requires parallel work to be real, bounded, and joinable.</li>
+            <li>It does not replace domain expertise, user contact, or honest thresholds.</li>
+          </ul>
+        </section>
+
+        <section id="checklist">
+          <h2>Field checklist</h2>
+          <ul class="checklist">
+            <li>Have we named the user, job, outcome, and non-goals?</li>
+            <li>Can one narrow journey produce observable evidence?</li>
+            <li>Is the current slice testable, usable, or lovable by a stated gate?</li>
+            <li>Are issues written as outcomes or experiments?</li>
+            <li>Which assumption is most consequential and still uncertain?</li>
+            <li>Have all edges been typed, and are blockers truly hard?</li>
+            <li>Could a smaller slice settle the decision sooner?</li>
+            <li>Does each parallel lane have a contract, WIP bound, and join?</li>
+            <li>What are the metric, baseline, threshold, and falsifier?</li>
+            <li>What is explicitly deferred, and why?</li>
+            <li>What result triggers Stop, Pivot, or Continue?</li>
+            <li>Will closure be reconciled against the complete user journey?</li>
+          </ul>
+          <p class="claim">If the next issue cannot make the next decision clearer, it is probably not the next issue.</p>
+          <p class="footer-note">This is a generic Aegis Method Lite field guide. Use it to make order inspectable, evidence early, and revision ordinary. The strongest plan is the one reality can change.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
