@@ -58,6 +58,20 @@ Stop/Pivot/Continue is possible. Minimum is scope, not permission for poor
 quality: required safety, privacy, reliability, accessibility, and
 operations remain gates.
 
+Use three nested evidence gates:
+
+- Testable: a real or representative user attempts the core job; the riskiest
+  consequential assumption is observable; a threshold and falsifier are
+  explicit.
+- Usable: the intended user can repeat the journey without builder rescue;
+  the normal path and important failure states are handled at acceptable
+  effort, clarity, and reliability for the declared context.
+- Lovable: observed preference or repeat behavior crosses a declared
+  threshold. Delight and trust are evidence, not a mood.
+
+These gates are nested: Lovable cannot bypass Usable or trustworthy. Broad
+and resilient work comes later when evidence justifies it.
+
 Use the vehicle ladder as a guardrail: skateboard / Testable, scooter /
 Controlled, bicycle / Usable, motorcycle / Lovable, car / Broad and
 resilient. Every rung transports the user. A candidate is a coherent
@@ -97,9 +111,19 @@ Stop/Pivot/Continue rule. Execute only that milestone; reconcile against
 landed journey evidence; then Stop, Pivot, or Continue and recompute or
 reslice.
 
-Preserve the exact .aegis JSON fields. Encode the promise, bounds, ordering
-rationale, and sequence in the parent goal/scope/assumptions; make each child
-scope one slice; put journey evidence, threshold, and decision rule in
-acceptance; use falsifiers to retract it. Ordered child IDs or tracker order
-may expose sequence. Do not add schema fields. See METHOD.md and
+Preserve the exact .aegis JSON fields with this deterministic mapping:
+
+- Parent goal: user promise and outcome.
+- Parent scope: scope and non-goals, plus a clearly labeled execution
+  contract containing ordered child IDs/product spine, parallel groups or
+  lanes, explicit joins, milestone metric/baseline/threshold, deferrals, and
+  Stop/Pivot/Continue rules. This contract is the single source of local
+  execution order.
+- Parent assumptions[]: actual assumptions only; never topology or order.
+- Each child scope: one coherent slice or legitimate lane.
+- Each child acceptance: slice-specific landed evidence and threshold; for a
+  parallel lane, its join condition.
+- Each child falsifiers: retraction checks.
+
+Do not rely on ordered IDs alone or external tracker order. See METHOD.md and
 docs/optimal-ordering.html when available, but these rules stand on their own.

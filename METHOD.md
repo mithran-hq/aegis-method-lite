@@ -152,6 +152,20 @@ Minimum is scope, not quality. Required safety, privacy, reliability,
 accessibility, and operational controls remain gates when they are part of
 the promise.
 
+Use three nested evidence gates:
+
+- **Testable:** a real or representative user attempts the core job; the
+  riskiest consequential assumption is observable; a threshold and falsifier
+  are explicit.
+- **Usable:** the intended user can repeat the journey without builder
+  rescue; the normal path and important failure states are handled at
+  acceptable effort, clarity, and reliability for the declared context.
+- **Lovable:** observed preference or repeat behavior crosses a declared
+  threshold. Delight and trust are evidence, not a mood.
+
+The gates are nested. Lovable cannot bypass usable or trustworthy; broad and
+resilient work comes later when the evidence justifies it.
+
 Use the vehicle ladder as a guardrail against component-first thinking:
 
 ```
@@ -161,8 +175,8 @@ skateboard → scooter → bicycle → motorcycle → car
 
 Every rung transports the user. The first rung is a narrow complete journey;
 later rungs make that same journey more controlled, usable, lovable, and
-then broad and resilient. Build the wheel only when the current vehicle can
-move. Component-only milestones are not user value. A fuller visual and
+then broad and resilient. Build components only as part of a rung or journey
+that transports the user. Component-only milestones are not user value. A fuller visual and
 worked examples live in [`docs/optimal-ordering.html`](docs/optimal-ordering.html).
 
 The candidate unit is a **coherent vertical slice** or a separately
@@ -222,13 +236,24 @@ The practical loop is:
 9. Reconcile the result against landed user-journey evidence.
 10. Stop, Pivot, or Continue; then recompute, reslice, or end.
 
-Encode ordering without changing the exact `.aegis` JSON schema. Put the
-promise, bounds, ordering rationale, and sequence in the parent `goal`,
-`scope`, and `assumptions`. Make each child `scope` one slice; state the
-complete journey, evidence threshold, and decision rule in `acceptance`; use
-`falsifiers` to retract it. Ordered child IDs or tracker order may expose
-the sequence. Do not invent fields. The order is memory only when it is
-recorded where the next agent can inspect and revise it.
+Encode ordering without changing the exact `.aegis` JSON schema. Use this
+deterministic mapping:
+
+- Parent `goal`: the user promise and outcome.
+- Parent `scope`: scope and non-goals, plus a clearly labeled **execution
+  contract** containing the ordered child IDs/product spine, parallel
+  groups or lanes, explicit joins, milestone metric/baseline/threshold,
+  deferrals, and Stop/Pivot/Continue rules. This labeled contract is the
+  single source of local execution order.
+- Parent `assumptions[]`: actual assumptions only. Do not put topology or
+  order here.
+- Each child `scope`: its one coherent slice or legitimate lane.
+- Each child `acceptance`: slice-specific landed evidence and threshold; for
+  a parallel lane, include its join condition.
+- Each child `falsifiers`: retraction checks.
+
+Do not rely on ordered IDs alone or on external tracker order. The contract
+is memory only when the next agent can inspect, reconcile, and revise it.
 
 ## 5. The Five Moves
 
